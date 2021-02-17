@@ -12,4 +12,6 @@ native-tls = "0.2.7"
 dotenv = "0.15.0"
 quoted_printable = "0.4.2"
 dissolve = "0.2.2"
-regex = "1.4.3"
+tokio = { version = "1", features = ["full"] }
+rustc-serialize = "0.3.24"
+reqwest = { version = "0.11.0", features = ["blocking", "json"] }
