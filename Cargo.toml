@@ -15,3 +15,4 @@ dissolve = "0.2.2"
 tokio = { version = "1", features = ["full"] }
 rustc-serialize = "0.3.24"
 reqwest = { version = "0.11.0", features = ["blocking", "json"] }
+mailparse = "0.13.2"

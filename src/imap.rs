@@ -1,6 +1,7 @@
 use native_tls::TlsConnector;
 use quoted_printable::{ decode, ParseMode };
 use dissolve::strip_html_tags;
+use mailparse::{ parse_mail };
 
 use crate::text_treatment::text_treatment;
 
@@ -15,16 +16,21 @@ pub fn imap() -> std::vec::Vec<std::string::String> {
 
     imap_session.select("INBOX").unwrap();
 
-    let message = imap_session.fetch("1", "RFC822").unwrap();
+    let message = imap_session.fetch("19", "RFC822").unwrap();
 
     let mut arr: std::vec::Vec<std::string::String> = vec!["".to_string()];
 
     if let Some(body) = message[0].body() { 
-    
-        let body_decoded = decode(body, ParseMode::Robust).unwrap();
-        let body_stripped = strip_html_tags(std::str::from_utf8(&body_decoded).unwrap());
-        
+        let body_unmimed = parse_mail(&body).unwrap().subparts[0].get_body().unwrap();
+        //let body_decoded = decode(body_unmimed, ParseMode::Robust).unwrap();
+        //let body_stripped = strip_html_tags(std::str::from_utf8(&body_decoded).unwrap());
+        let body_stripped = strip_html_tags(&body_unmimed);
+
+        println!("{:?}", body_stripped);
+
         arr = text_treatment(body_stripped);
+
+        //let body_stripped = strip_html_tags(std::str::from_utf8(&body_decoded).unwrap());
     } else {
         println!("Message didn't have a body!");
     }

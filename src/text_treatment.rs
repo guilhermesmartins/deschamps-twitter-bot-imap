@@ -1,5 +1,3 @@
-//use regex::{ Regex, RegexSet };
-
 //O(n^2 + 3n)
 pub fn text_treatment(mut arr: std::vec::Vec<std::string::String>) -> Vec<std::string::String> {
     let mut iter = 0;
@@ -37,6 +35,7 @@ pub fn text_treatment(mut arr: std::vec::Vec<std::string::String>) -> Vec<std::s
     let mut formated_news: Vec<std::string::String> = Vec::new();//Vec::with_capacity(20);
 
     for info in news {
+        println!("{}\n", info);
         formated_news.push(info.replace("\n", " ").replace("*", ""));
     }
 
